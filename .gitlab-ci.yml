@@ -1,0 +1,108 @@
+variables:
+  DOCKER_TAG_VERSION: ${CI_COMMIT_SHORT_SHA}
+  PROJECT_NAME: "MagicRC Cubes Frontend"
+  PROJECT: cube
+  PART: frontend
+  COPY_LIST: "plugins public server src nuxt.config.ts yarn.lock *.json composables"
+  PROJECT_DIR: source\/${PART}
+  LOG_FILE: ${PART}.log
+
+stages:
+  - build
+  - deploy
+  - release
+  - rollback
+  - finish
+
+
+include:
+  - project: light-digital/infrastructure/templates
+    ref: original
+    file: 
+      - CI/Jobs/frontend/dockerize.yml
+      - CI/Jobs/universal/deploy.yml
+      - CI/Jobs/universal/rollback.yml
+      - CI/Jobs/universal/release.yml
+
+
+.deploy: &deploy
+  stage: deploy
+  tags: [main-runner]
+  when: manual
+  extends: .deploy_template
+  script:
+    - sed "s/BACK_URL/${URL}/g" -i docker-compose.yml
+
+
+build:
+  only: 
+    - dev
+    - master
+  tags: [main-runner]
+  extends: .dockerize_template
+
+release (version from dev):
+  only: [master]
+  tags: [main-runner]
+  environment: dev
+  extends: .release_template
+
+
+deploy dev:
+  only: [dev]
+  needs: [build]
+  environment:
+    name: dev
+    url: https://${URL}
+  variables:
+    DOCKER_REGISTRY: ${DEV_REGISTRY}
+  <<: *deploy
+
+rollback dev:
+  only: [dev]
+  tags: [main-runner]
+  needs: [deploy dev]
+  environment: dev
+  extends: .rollback_template
+
+
+deploy prod:
+  only: [master]
+#  except: [branches]
+  needs: [build]
+  environment:
+    name: prod
+    url: https://${URL}
+  variables:
+    DOCKER_REGISTRY: ${DEV_REGISTRY}
+  <<: *deploy
+
+rollback prod:
+  only: [master]
+#  except: [branches]
+  tags: [main-runner]
+  needs: [deploy prod]
+  environment: prod
+  extends: .rollback_template
+
+
+.stop dev:
+  stage: finish
+  only: [dev]
+  tags: [main-runner]
+  needs: [deploy dev]
+  environment:
+    name: dev
+    action: stop
+  script: [echo "Well done!"]
+
+.stop prod:
+  stage: finish
+  only: [master]
+#  except: [branches]
+  tags: [main-runner]
+  needs: [deploy prod]
+  environment:
+    name: prod
+    action: stop
+  script: [echo "Well done!"]

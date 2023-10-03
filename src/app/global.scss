@@ -1,0 +1,102 @@
+$background-color: #eff3fd;
+$primary-color: #00dea3;
+$table-border: #dddddd;
+$error-color: #fe8f66;
+$warn-color: #ffcc40;
+$table-border: thin solid red;
+$secondary-color: #984eff;
+
+a,
+span,
+button {
+  color: var(--colors-dark-grey-900, #00140e);
+  text-decoration: none;
+}
+
+.notification {
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: #fff;
+  background: #44a4fc;
+
+  .notification-title {
+    font-size: 18px;
+  }
+
+  .notification-content {
+    font-size: 16px;
+    max-width: 350px;
+  }
+
+  &.success {
+    background: $primary-color;
+  }
+
+  &.warn {
+    background: $warn-color;
+  }
+
+  &.error {
+    background: $error-color;
+  }
+}
+
+.v-card {
+  &--variant-elevated {
+    box-shadow: none;
+  }
+}
+.v-card-text {
+  text-align: center;
+  max-width: 400px;
+  text-wrap: balance;
+}
+
+.v-btn {
+  font-size: 13px;
+  min-height: 46px;
+  border-radius: 1rem;
+  background-color: $primary-color;
+
+  &__content {
+    color: white;
+    font-weight: 700;
+    line-height: 16.157px;
+    letter-spacing: 1px;
+  }
+
+  &--variant-elevated {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    background-color: #00dea336;
+  }
+}
+
+.v-combobox .v-field__input {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.filter-input.v-input:not(.v-select) .v-field__input {
+  padding-inline: 0.2rem;
+  -webkit-padding: 0.2rem;
+}
+.rounded.v-select .v-field {
+  border-radius: 1rem;
+}
+
+.v-pagination .v-btn__content {
+  color: black;
+}
+.v-field {
+  &--variant-outlined {
+    padding-inline-end: 0;
+  }
+}
+.v-text-field {
+  background-color: white;
+}

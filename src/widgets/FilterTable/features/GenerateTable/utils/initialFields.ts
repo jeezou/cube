@@ -1,0 +1,28 @@
+import { FieldType, InfoType } from './types'
+
+export const initialFields: FieldType[] = [
+  { title: 'id', value: [], type: InfoType.number },
+  { title: 'year', value: [], type: InfoType.ru_string },
+  { title: 'month', value: [], type: InfoType.ru_string },
+  { title: 'client_name', value: [] },
+  { title: 'store_format', value: [], type: InfoType.ru_string },
+  { title: 'dm_store_format', value: [] },
+  { title: 'region', value: [], type: InfoType.ru_string },
+  { title: 'oblast', value: [], type: InfoType.ru_string },
+  { title: 'city', value: [], type: InfoType.ru_string },
+  { title: 'store_add', value: [], type: InfoType.ru_string },
+  { title: 'store_no', value: [], type: InfoType.ru_string },
+  { title: 'category', value: [], type: InfoType.number },
+  { title: 'grp_name', value: [] },
+  { title: 'grp_name2', value: [] },
+  { title: 'type', value: [] },
+  { title: 'one', value: [] },
+  { title: 'brand', value: [] },
+  { title: 'lname', value: [] },
+  { title: 'xname', value: [] },
+  { title: 'xcode', value: [], type: InfoType.ru_string },
+  { title: 'code', value: [], type: InfoType.ru_string },
+  { title: 'sales_item', disabled: true, value: [] },
+  { title: 'sales_value', disabled: true, value: [] },
+  { title: 'purse_value', disabled: true, value: [] },
+]

@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  frontend:
+    image: cr.yandex/REGISTRY/cube/frontend:TAG
+    container_name: cube-frontend
+    environment:
+      VITE_APP_API_URL: "https://BACK_URL/cube/"
+    ports:
+      - "3020:3000"
+    restart: on-failure
